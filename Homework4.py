@@ -32,9 +32,10 @@ class Tree:
         if data < node.value:
             return self.search(node.left, data, node)
     
-    # если добавляемое значение меньше значения в родительском узле, то новая вершина добавляет в левую ветвь, иначе в правую.
-    # если добавленное значение уже присутсвует в дереве, то оно игнорируется.
-    
+
+# если добавляемое значение меньше значения в родительском узле, то новая вершина добавляет в левую ветвь, иначе в правую.
+# если добавленное значение уже присутсвует в дереве, то оно игнорируется.
+
     def add_node(self, value):
         res = self.search(self.root, value)
         if not res[0]:
@@ -46,11 +47,39 @@ class Tree:
         else:
             print('Ой все, такое значение есть')
 
-    # def delete_node(self, value):
-        
-    
+   
 
-            
+    # удаление узла с одним потомком
+    def del_2(self, node, parent):
+        if parent.left == node:
+            if node.left is None:
+                parent.left = node.rigth
+            elif node.right is None:
+                parent.left = node.left
+        elif parent.right == node:
+            if node.left is None:
+                parent.right = node.right
+            elif node.rigth is None:
+                parent.right = node.left
+
+    # удаление узла
+    def del_node(self, node, parent):
+        if parent.left == node:
+            parent.left = None
+        elif parent.rigth == node:
+            parent.rigth = None
+
+    def delete_node(self, value, node, parent):
+        res = self.search(self.root, value)
+        if not res:
+            return None
+        if node.left is None and node.right is None:
+            self.del_node(node, parent)
+        elif node.left is None or node.rigth is None:
+            self.del_2(node, parent)
+        
+
+               
 initial_node = Node(15)
 
 tree_1 = Tree(initial_node)
